@@ -71,7 +71,7 @@
   width: 15px;
   height: 15px;
   border-radius: 3px;
-  background: #fff;
+  background: #ebebeb;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,6 +79,10 @@
   padding-bottom: 3px;
   font-size: 13px;
   font-weight: bold;
+}
+.select-total .del:hover {
+  background: #b57e7e;
+  color: #fff;
 }
 
 .select-total .list-options {
@@ -92,11 +96,14 @@
 
 .select-total .list-options .option {
   cursor: pointer;
-  padding: 4px 0;
+  margin: 4px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
   border-bottom: 1px solid #ccc;
+}
+.select-total .list-options .option .title {
+  width: 100%;
 }
 
 .select-total input {

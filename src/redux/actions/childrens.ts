@@ -7,6 +7,19 @@ const urlDataServ = "http://localhost:3004";
 export const SET_CHILDRENS = "SET_CHILDRENS";
 export const SET_LOADING = "SET_LOADING";
 export const ADD_CHILDREN = "ADD_CHILDREN";
+export const REMOVE_CHILDREN = "REMOVE_CHILDREN";
+
+export type TRemoveChildren = {
+  type: typeof REMOVE_CHILDREN,
+  payload: number
+}
+
+export const removeChildren = (id: number): TRemoveChildren => {
+  return {
+    type: REMOVE_CHILDREN, 
+    payload: id
+  }
+}
 
 export type TAddChildren = {
   type: typeof ADD_CHILDREN,
@@ -44,15 +57,23 @@ export const setChildrens = (childrens: TChildren[]): TSetChildrens => {
   }
 }
 
+export const removeChildrenInBD = (id: number) => (dispatch: any): void => {
+  dispatch(setLoading(true));
+  Axios.delete(`${urlDataServ}/childrens/${id}`)
+    .then(({ data }) => {
+      dispatch(removeChildren(id));
+      dispatch(setLoading(false));
+    })
+    .catch((e) => {
+      console.error(e);
+    })
+}
+
 export const addChildrenInBD = (parent_id: number, name: string, flags: string | null) => (dispatch: any): void => {
   dispatch(setLoading(true));
-  console.log("123123");
-  
   Axios.post(`${urlDataServ}/childrens`, {parent_id, name, flags})
     .then(({ data }) => {
-      console.log(data);
-      
-      // dispatch(setChildrens(data));
+      dispatch(addChildren(data));
       dispatch(setLoading(false));
     })
     .catch((e) => {

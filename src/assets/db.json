@@ -38,12 +38,6 @@
   ],
   "childrens": [
     {
-      "id": 0,
-      "parent_id": 0,
-      "name": "Josefina Watts",
-      "flags": null
-    },
-    {
       "id": 1,
       "parent_id": 4,
       "name": "Dominguez Valentine",
@@ -98,12 +92,6 @@
       "flags": null
     },
     {
-      "id": 10,
-      "parent_id": 0,
-      "name": "Kelli Boyd",
-      "flags": "flug"
-    },
-    {
       "id": 11,
       "parent_id": 1,
       "name": "Corina Brown",
@@ -132,12 +120,6 @@
       "parent_id": 1,
       "name": "Rae Benjamin",
       "flags": null
-    },
-    {
-      "id": 16,
-      "parent_id": 0,
-      "name": "Hilda Page",
-      "flags": "flug"
     },
     {
       "id": 17,
@@ -236,34 +218,16 @@
       "id": 32
     },
     {
-      "parent_id": 0,
-      "name": "wqdwqd wqdqw",
+      "parent_id": 2,
+      "name": "гор",
       "flags": "ss",
-      "id": 33
+      "id": 56
     },
     {
       "parent_id": 0,
-      "name": "wqdwqd wqdqw",
+      "name": "Машина",
       "flags": "ss",
-      "id": 34
-    },
-    {
-      "parent_id": 0,
-      "name": "221212",
-      "flags": "ss",
-      "id": 35
-    },
-    {
-      "parent_id": 0,
-      "name": "221212",
-      "flags": "ss",
-      "id": 36
-    },
-    {
-      "parent_id": 0,
-      "name": "221212",
-      "flags": "ss",
-      "id": 37
+      "id": 58
     }
   ]
 }

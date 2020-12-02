@@ -5,8 +5,8 @@ import './App.css';
 import MultiSelect from './components/MultiSelect';
 import { AppStateType } from './redux/reducers/rootReducer';
 import { TCategory, TChildren } from './mainTypes';
-import { addChildrenInBD, fetchChildrensByIdCategory } from './redux/actions/childrens';
-import FormCrud from './components/FormCrud/FormCrud';
+import { addChildrenInBD, fetchChildrensByIdCategory, removeChildren, removeChildrenInBD } from './redux/actions/childrens';
+import FormAdd from './components/FormAdd/FormAdd';
 import { useCallback } from 'react';
 const arr = [ { label: 'apple', id: 0 }, { label: 'banana', id: 1 }, { label: 'pear', id: 2 } ];
 
@@ -35,22 +35,29 @@ function App() {
   const onAddCategory =  useCallback((name: string) => {
     
   }, [dispatch])
+  const onRemoveCategory = useCallback((id: number) => {
+    // dispatch(removeChildrenInBD(id));
+  }, [dispatch])
   const onAddChildren = useCallback((name: string) => {
     idActiveCategory!==null && dispatch(addChildrenInBD(idActiveCategory, name, "ss"));
   }, [dispatch, idActiveCategory])
+  const onRemoveChildren = useCallback((id: number) => {
+    dispatch(removeChildrenInBD(id));
+  }, [dispatch])
+
   return (
     <div className="app">
       <div className="container">
         <div className="main">
           <div className="sidebar">
             <h3 className="title">Категории</h3>
-            <MultiSelect options={categoryOptions} onSelectOptionsItem={onSelectCategory}/>
+            <MultiSelect options={categoryOptions} onSelectOptionsItem={onSelectCategory} />
             <h3 className="title">Дочерние объекты категории</h3>
-            <MultiSelect options={childrenOptions} multi isLoadingData={ isLoadingChild }/>
+            <MultiSelect options={childrenOptions} multi isLoadingData={isLoadingChild} onDelOptions={onRemoveChildren}/>
           </div>
     
           <div className="content">
-            <FormCrud onAddCategory={onAddCategory} onAddChildren={ onAddChildren}/>
+            <FormAdd onAddCategory={onAddCategory} onAddChildren={onAddChildren}/>
             <div className="action-list">
               dqwdwqdq
             </div>

@@ -16,16 +16,15 @@ type PropTypes = {
     multi?: boolean,
     onSelectOptionsItem?: (id : number) => void,
     onClick?: () => void,
-    onClickItems?: () => void,
-    onClickDelItems?: () => void,
-    onClickDelFieldItems?: () => void
+    onClickOptions?: () => void,
+    onDelOptions?: (id:number) => void,
+    onDelFieldItems?: () => void
 }
-const MultiSelect : React.FC < PropTypes > = ({multi, options, isLoadingData, onSelectOptionsItem}) => {
+const MultiSelect : React.FC < PropTypes > = ({multi, options, isLoadingData, onSelectOptionsItem, onDelOptions}) => {
     const [valueFieldInput, setValueFieldInput] = useState('');
     const [open, setOpen] = useState(false);
     const [activeItems, setActiveItems] = useState < TOption[] > ([]);
 
-  
     const optionsItems : TOption[] = React.useMemo(() => {
         if (multi) {
             return options.filter((option) => !activeItems.some((item) => item.id === option.id))
@@ -78,9 +77,7 @@ const MultiSelect : React.FC < PropTypes > = ({multi, options, isLoadingData, on
                                 <div
                                     key={item.id}
                                     style={{
-                                    background: isHighlighted
-                                        ? 'lightgray'
-                                        : 'white'
+                                    background: isHighlighted ? 'lightgray' : 'white'
                                 }}>
                                     {item.label + " " + item.id}
                                 </div>
@@ -91,12 +88,7 @@ const MultiSelect : React.FC < PropTypes > = ({multi, options, isLoadingData, on
                                 onSelect={onSelectFieldInAutoCompleteHandler}
                         />
 
-                        : <input
-                            type="text"
-                            value={activeItems.length
-                                ? activeItems[0].label
-                                : ""}
-                            readOnly/>
+                        : <input type="text" value={activeItems.length ? activeItems[0].label : ""} readOnly/>
 }
 
                     <div
@@ -119,7 +111,7 @@ const MultiSelect : React.FC < PropTypes > = ({multi, options, isLoadingData, on
                     ? <Loading/>
                     : <div className="list-options">
                             {optionsItems.map((item) => {
-                                return <Option id={item.id} key={item.id} title={item.label} onClick={onSelectOption}/>
+                                return <Option id={item.id} key={item.id} title={item.label} onClick={onSelectOption} onDel={onDelOptions}/>
                             })}
                         </div>
                 : null

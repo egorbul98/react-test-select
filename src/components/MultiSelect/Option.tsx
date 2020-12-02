@@ -14,8 +14,8 @@ const Options: React.FC<PropsType> = ({ id, title, onDel, onClick }) => {
     onClick && onClick(id);
   }
   return (
-    <div className="option" onClick={onClickHandler}>
-      <div className="title">{title}</div>
+    <div className="option" >
+      <div className="title" onClick={onClickHandler}>{title}</div>
       <div className="del" onClick={onDelHandler} title="Удалить">x</div>
     </div>
   );

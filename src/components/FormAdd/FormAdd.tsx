@@ -3,7 +3,7 @@ type PropTypes = {
   onAddCategory: (name:string)=>void,
   onAddChildren: (name:string)=>void
 }
-const FormCrud: React.FC<PropTypes> = ({ onAddCategory, onAddChildren }) => {
+const FormAdd: React.FC<PropTypes> = ({ onAddCategory, onAddChildren }) => {
   const [nameCategory, setNameCategory] = useState('');
   const [nameChildren, setNameChildren] = useState('');
   const onChangeInput = (e:any) => {
@@ -39,4 +39,4 @@ const FormCrud: React.FC<PropTypes> = ({ onAddCategory, onAddChildren }) => {
   );
 }
 
-export default React.memo(FormCrud);
+export default React.memo(FormAdd);
