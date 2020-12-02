@@ -1,0 +1,221 @@
+{
+  "categories": [
+    {
+      "id": 0,
+      "name": "Машины и транспортные средства",
+      "flags": null
+    },
+    {
+      "id": 1,
+      "name": "Одежда",
+      "flags": null
+    },
+    {
+      "id": 2,
+      "name": "Спорт",
+      "flags": null
+    },
+    {
+      "id": 3,
+      "name": "Электроника",
+      "flags": null
+    },
+    {
+      "id": 4,
+      "name": "Бизнес",
+      "flags": null
+    },
+    {
+      "id": 5,
+      "name": "Здоровье",
+      "flags": null
+    },
+    {
+      "id": 6,
+      "name": "Для животных",
+      "flags": null
+    }
+  ],
+  "childrens":[
+    {
+      "id": 0,
+      "parent_id": 0,
+      "name": "Josefina Watts",
+      "flags": null
+    },
+    {
+      "id": 1,
+      "parent_id": 4,
+      "name": "Dominguez Valentine",
+      "flags": null
+    },
+    {
+      "id": 2,
+      "parent_id": 6,
+      "name": "Maddox Merritt",
+      "flags": "flug"
+    },
+    {
+      "id": 3,
+      "parent_id": 3,
+      "name": "Howe Rios",
+      "flags": null
+    },
+    {
+      "id": 4,
+      "parent_id": 6,
+      "name": "Marian Bean",
+      "flags": "flug"
+    },
+    {
+      "id": 5,
+      "parent_id": 2,
+      "name": "Tyler Howe",
+      "flags": null
+    },
+    {
+      "id": 6,
+      "parent_id": 1,
+      "name": "Adrienne Steele",
+      "flags": "flug"
+    },
+    {
+      "id": 7,
+      "parent_id": 5,
+      "name": "Gilda Dyer",
+      "flags": null
+    },
+    {
+      "id": 8,
+      "parent_id": 5,
+      "name": "Miranda Evans",
+      "flags": "flug"
+    },
+    {
+      "id": 9,
+      "parent_id": 1,
+      "name": "Small Sanders",
+      "flags": null
+    },
+    {
+      "id": 10,
+      "parent_id": 0,
+      "name": "Kelli Boyd",
+      "flags": "flug"
+    },
+    {
+      "id": 11,
+      "parent_id": 1,
+      "name": "Corina Brown",
+      "flags": "flug"
+    },
+    {
+      "id": 12,
+      "parent_id": 3,
+      "name": "Ila Everett",
+      "flags": null
+    },
+    {
+      "id": 13,
+      "parent_id": 1,
+      "name": "Kim Rivers",
+      "flags": "flug"
+    },
+    {
+      "id": 14,
+      "parent_id": 1,
+      "name": "Sondra Hopper",
+      "flags": "flug"
+    },
+    {
+      "id": 15,
+      "parent_id": 1,
+      "name": "Rae Benjamin",
+      "flags": null
+    },
+    {
+      "id": 16,
+      "parent_id": 0,
+      "name": "Hilda Page",
+      "flags": "flug"
+    },
+    {
+      "id": 17,
+      "parent_id": 1,
+      "name": "Joanna Bridges",
+      "flags": null
+    },
+    {
+      "id": 18,
+      "parent_id": 3,
+      "name": "Berger Edwards",
+      "flags": "flug"
+    },
+    {
+      "id": 19,
+      "parent_id": 4,
+      "name": "Angie Clayton",
+      "flags": null
+    },
+    {
+      "id": 20,
+      "parent_id": 4,
+      "name": "Kathryn Roman",
+      "flags": null
+    },
+    {
+      "id": 21,
+      "parent_id": 1,
+      "name": "Savage Holden",
+      "flags": "flug"
+    },
+    {
+      "id": 22,
+      "parent_id": 6,
+      "name": "Alyce Malone",
+      "flags": null
+    },
+    {
+      "id": 23,
+      "parent_id": 2,
+      "name": "Peterson Roberson",
+      "flags": "flug"
+    },
+    {
+      "id": 24,
+      "parent_id": 5,
+      "name": "Kramer James",
+      "flags": null
+    },
+    {
+      "id": 25,
+      "parent_id": 1,
+      "name": "Morton Bonner",
+      "flags": null
+    },
+    {
+      "id": 26,
+      "parent_id": 1,
+      "name": "Georgette Donaldson",
+      "flags": null
+    },
+    {
+      "id": 27,
+      "parent_id": 6,
+      "name": "Martin Snow",
+      "flags": null
+    },
+    {
+      "id": 28,
+      "parent_id": 2,
+      "name": "Key Reilly",
+      "flags": "flug"
+    },
+    {
+      "id": 29,
+      "parent_id": 6,
+      "name": "Lindsay Le",
+      "flags": null
+    }
+  ]
+}

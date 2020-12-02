@@ -1,15 +1,15 @@
 import React from 'react';
 import './App.css';
 import MultiSelect from './components/MultiSelect';
-import Select from './components/Select';
 function App() {
   return (
     <div className="app">
       <div className="container">
         <div className="main">
           <div className="sidebar">
+            <MultiSelect multi/>
+            
             <MultiSelect/>
-            <Select/>
           </div>
     
           <div className="content">
