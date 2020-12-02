@@ -116,3 +116,6 @@
   color: inherit;
   display: block;
 }
+.select-total .simple-input {
+  cursor: default;
+}

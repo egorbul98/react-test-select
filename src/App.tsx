@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import {fetchCategories, setActiveIdCategory} from './redux/actions/categories';
+import {addCategoryInBD, fetchCategories, removeCategoryInBD, setActiveIdCategory} from './redux/actions/categories';
 import './App.css';
 import MultiSelect from './components/MultiSelect';
 import { AppStateType } from './redux/reducers/rootReducer';
@@ -12,10 +12,11 @@ const arr = [ { label: 'apple', id: 0 }, { label: 'banana', id: 1 }, { label: 'p
 
 function App() {
   const dispatch = useDispatch();
-  const { categories, childrens, isLoadingChild, idActiveCategory} = useSelector(({ categories, childrens }:AppStateType) => {
+  const { categories, childrens, isLoadingChild, idActiveCategory, isLoadingCategory} = useSelector(({ categories, childrens }:AppStateType) => {
     return {
       categories: categories.items,
       idActiveCategory: categories.activeId,
+      isLoadingCategory: categories.isLoading,
       childrens: childrens.items,
       isLoadingChild: childrens.isLoading,
     }
@@ -25,25 +26,31 @@ function App() {
   }, []);
   
   const categoryOptions = React.useMemo(()=>categories.map((item:TCategory) => ({ id: item.id, label: item.name })), [categories]);
-  const childrenOptions = React.useMemo(()=>childrens.map((item:TChildren) => ({ id: item.id, label: item.name })), [childrens]);
+  const childrenOptions = React.useMemo(()=>childrens.map((item:TChildren) => ({ id: item.id, label: item.name })), [childrens, idActiveCategory]);
 
 
   const onSelectCategory = useCallback((id: number) => {
     idActiveCategory !== id && dispatch(fetchChildrensByIdCategory(id));
-  }, [dispatch, idActiveCategory]);
+  }, [dispatch, idActiveCategory, fetchChildrensByIdCategory]);
 
-  const onAddCategory =  useCallback((name: string) => {
-    
-  }, [dispatch])
+  const onAddCategory = useCallback((name: string, flag: string | null) => {
+    dispatch(addCategoryInBD(name, flag))
+  }, [dispatch, addCategoryInBD])
+
   const onRemoveCategory = useCallback((id: number) => {
-    // dispatch(removeChildrenInBD(id));
-  }, [dispatch])
-  const onAddChildren = useCallback((name: string) => {
-    idActiveCategory!==null && dispatch(addChildrenInBD(idActiveCategory, name, "ss"));
-  }, [dispatch, idActiveCategory])
+    if (idActiveCategory === id) {
+      dispatch(setActiveIdCategory(null));
+    }
+    dispatch(removeCategoryInBD(id));
+  }, [dispatch, idActiveCategory, removeCategoryInBD, setActiveIdCategory])
+
+  const onAddChildren = useCallback((name: string, flag: string | null) => {
+    idActiveCategory!==null && dispatch(addChildrenInBD(idActiveCategory, name, flag));
+  }, [dispatch, idActiveCategory, addChildrenInBD])
+
   const onRemoveChildren = useCallback((id: number) => {
     dispatch(removeChildrenInBD(id));
-  }, [dispatch])
+  }, [dispatch, removeChildrenInBD])
 
   return (
     <div className="app">
@@ -51,7 +58,7 @@ function App() {
         <div className="main">
           <div className="sidebar">
             <h3 className="title">Категории</h3>
-            <MultiSelect options={categoryOptions} onSelectOptionsItem={onSelectCategory} />
+            <MultiSelect options={categoryOptions} onSelectOptionsItem={onSelectCategory} onDelOptions={onRemoveCategory} isLoadingData={isLoadingCategory}/>
             <h3 className="title">Дочерние объекты категории</h3>
             <MultiSelect options={childrenOptions} multi isLoadingData={isLoadingChild} onDelOptions={onRemoveChildren}/>
           </div>

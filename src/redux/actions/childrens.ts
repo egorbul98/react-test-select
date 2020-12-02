@@ -5,7 +5,7 @@ import { setActiveIdCategory } from "./categories";
 const urlDataServ = "http://localhost:3004";
 
 export const SET_CHILDRENS = "SET_CHILDRENS";
-export const SET_LOADING = "SET_LOADING";
+export const SET_LOADING_CHILD = "SET_LOADING_CHILD";
 export const ADD_CHILDREN = "ADD_CHILDREN";
 export const REMOVE_CHILDREN = "REMOVE_CHILDREN";
 
@@ -34,13 +34,13 @@ export const addChildren = (item: TChildren): TAddChildren => {
 }
 
 export type TSetLoading = {
-  type: typeof SET_LOADING,
+  type: typeof SET_LOADING_CHILD,
   payload: boolean
 }
 
 export const setLoading = (isLoading: boolean): TSetLoading => {
   return {
-    type: SET_LOADING, 
+    type: SET_LOADING_CHILD, 
     payload: isLoading
   }
 }
@@ -68,6 +68,15 @@ export const removeChildrenInBD = (id: number) => (dispatch: any): void => {
       console.error(e);
     })
 }
+// export const removeChildrensByParentIdInBD = (id: number) => (dispatch: any): void => {
+//   Axios.delete(`${urlDataServ}/childrens/${id}`)
+//     .then(({ data }) => {
+//       dispatch(removeChildrens(id));
+//     })
+//     .catch((e) => {
+//       console.error(e);
+//     })
+// }
 
 export const addChildrenInBD = (parent_id: number, name: string, flags: string | null) => (dispatch: any): void => {
   dispatch(setLoading(true));

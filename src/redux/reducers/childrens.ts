@@ -1,5 +1,5 @@
 import { TChildren} from "../../mainTypes";
-import {SET_CHILDRENS, SET_LOADING, TSetChildrens, TSetLoading, ADD_CHILDREN, TAddChildren, REMOVE_CHILDREN, TRemoveChildren } from "../actions/childrens";
+import {SET_CHILDRENS, SET_LOADING_CHILD, TSetChildrens, TSetLoading, ADD_CHILDREN, TAddChildren, REMOVE_CHILDREN, TRemoveChildren } from "../actions/childrens";
 
 const initialState = {
   items: [] as TChildren[],
@@ -13,7 +13,7 @@ export const childrensReducer = (state = initialState, action:ActionsTypes):Stat
   switch (action.type) {
     case SET_CHILDRENS:
       return { ...state, items: action.payload };
-    case SET_LOADING:
+    case SET_LOADING_CHILD:
       return { ...state, isLoading: action.payload };
     case ADD_CHILDREN:
       return { ...state, items: [...state.items, action.payload] };
