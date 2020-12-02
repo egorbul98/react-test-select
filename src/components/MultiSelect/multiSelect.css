@@ -9,17 +9,37 @@
   margin: 10px 0 ;
 }
 
+
 .select-total .field-wrap {
-  border-bottom: 1px solid #cccccc;
   padding: 10px 20px;
+  width: 100%;
   display: flex;
   align-items: center;
-  flex-wrap: wrap;
-  margin: 0 -3px;
+}
+.select-total .field-wrap .open-btn{
+  margin-left: 10px;
+  cursor: pointer;
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+  
+  transform: rotate(45deg);
+}
+.select-total .field-wrap .open-btn.active{
+  transform: rotate(-135deg);
 }
 
-.select-total .field-wrap>span {
+.select-total .field-list{
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 -3px;
+  padding: 0 20px 10px;
+}
+
+.select-total .field-wrap>div:not(.open-btn) {
   width: 100%;
+  display: block;
 }
 
 .select-total .field-item {
@@ -44,6 +64,7 @@
 }
 
 .select-total .del {
+  cursor: pointer;
   margin-left: 20px;
   cursor: pointer;
   color: rgb(223, 158, 158);
@@ -61,13 +82,16 @@
 }
 
 .select-total .list-options {
-  padding: 10px 20px;
+  padding: 0 20px 10px;
   height: 100%;
   overflow: auto;
   max-height: 100px;
+  
+  border-top: 1px solid #cccccc;
 }
 
 .select-total .list-options .option {
+  cursor: pointer;
   padding: 4px 0;
   display: flex;
   align-items: center;
@@ -76,10 +100,12 @@
 }
 
 .select-total input {
+  height: 100%;
   width: 100%;
   background: 0px center;
-  border: 0px;
+  border: 1px solid #ccc;
   outline: 0px;
   padding: 0px;
   color: inherit;
+  display: block;
 }

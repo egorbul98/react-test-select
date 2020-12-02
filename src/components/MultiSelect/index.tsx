@@ -1,72 +1,130 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import classNames from 'classnames';
 import Autocomplete from 'react-autocomplete';
 import Option from './Option';
 import FieldItem from './FieldItem';
-
 import './multiSelect.css';
-import { TCategory } from '../../mainTypes';
-const arr = ["абрис", "apricot", "banana", "carror"];
-type PropTypes = {
-    // items: TCategory[];
-    multi?: boolean
+import Loading from '../Loading/Loading';
+import {useCallback} from 'react';
+type TOption = {
+    id: number,
+    label: string
 }
-const MultiSelect: React.FC<PropTypes> = ({ multi }) => {
-  const [valueFieldInput, setValueFieldInput] = useState('');
+type PropTypes = {
+    options: Array < TOption >,
+    isLoadingData?: boolean,
+    multi?: boolean,
+    onSelectOptionsItem?: (id : number) => void,
+    onClick?: () => void,
+    onClickItems?: () => void,
+    onClickDelItems?: () => void,
+    onClickDelFieldItems?: () => void
+}
+const MultiSelect : React.FC < PropTypes > = ({multi, options, isLoadingData, onSelectOptionsItem}) => {
+    const [valueFieldInput, setValueFieldInput] = useState('');
+    const [open, setOpen] = useState(false);
+    const [activeItems, setActiveItems] = useState < TOption[] > ([]);
 
-  const onChangeFieldHandler = (e: any) => {
-    setValueFieldInput(e.target.value)
-  }
-  const onSelectFieldHandler = (value: string) => {
-    setValueFieldInput(value)
-  }
+  
+    const optionsItems : TOption[] = React.useMemo(() => {
+        if (multi) {
+            return options.filter((option) => !activeItems.some((item) => item.id === option.id))
+        } else {
+            return options;
+        }
+    }, [options, activeItems, multi]);
 
-  const onClickFieldItem = (part: any) => {
-      console.log("part");
-      
-        console.log(part);
-    }
+    const onChangeFieldHandler = useCallback((e : any) => {
+        setValueFieldInput(e.target.value)
+    }, [setValueFieldInput])
+
+    const onSelectFieldInAutoCompleteHandler = useCallback((value : string, item : any) => {
+        setActiveItems([
+            ...activeItems,
+            item
+        ]);
+        setValueFieldInput("");
+    }, [setValueFieldInput, setActiveItems, activeItems])
+
+    const onDelFieldItem = useCallback((id : number) => {
+        setActiveItems(activeItems.filter((item) => item.id !== id));
+    }, [setActiveItems, activeItems]);
+
+
+    const onSelectOption = useCallback((id: number) => {
+        if (multi) {
+            setActiveItems([ ...activeItems, options.filter((item) => item.id === id)[0] ])
+        } else {
+          setActiveItems([options.filter((item) => item.id === id)[0]]);
+        }
+        onSelectOptionsItem && onSelectOptionsItem(id);
+    }, [onSelectOptionsItem, setActiveItems, activeItems, options, multi])
+
+    const onToggleOpen = useCallback((e : any) => {
+        if (!multi && (e.target.classList.contains("field-wrap") || e.target.closest(".field-wrap")) || (e.target.classList.contains("open-btn"))) {
+            setOpen(!open)
+        }
+    }, [multi, setOpen, open]);
 
     return (
         <div className={classNames("select-total", {"multi-select": multi})}>
-        <div className="field-wrap">
-        <Autocomplete
-            getItemValue={(item) => item.label}
-            items={[
-              { label: 'apple', id: 0 },
-              { label: 'banana', id:1 },
-              { label: 'pear', id:2  }
-            ]}
-            renderItem={(item, isHighlighted) =>
-              <div key={item.id} style={{ background: isHighlighted ? 'lightgray' : 'white' }} onClick={()=>console.log("sssssssss")}>
-                {item.label + " "+item.id} 
-              </div>
-                }
-  
-            value={valueFieldInput}
-            onChange={onChangeFieldHandler}
-            onSelect={onSelectFieldHandler}
-          />
-          
-                {/* {multi && <TextInput
-                    // onRequestOptions={handleRequestOptions}
-                    options={arr}
-                    trigger={""}
-            className="field"
-            onChange={(e:any)=>console.log(e)}
-                    regex={"^[a-zA-Zа-яА-Я0-9_\-]+$"}/>} */}
+            <div className="top">
+                <div className="field-wrap" onClick={onToggleOpen}>
+                    {multi
+                        ? <Autocomplete
+                                getItemValue={(item) => item.label}
+                                items={optionsItems}
+                                renderItem={(item, isHighlighted) => (
+                                <div
+                                    key={item.id}
+                                    style={{
+                                    background: isHighlighted
+                                        ? 'lightgray'
+                                        : 'white'
+                                }}>
+                                    {item.label + " " + item.id}
+                                </div>
+                            )}
+                                autoHighlight={true}
+                                value={valueFieldInput}
+                                onChange={onChangeFieldHandler}
+                                onSelect={onSelectFieldInAutoCompleteHandler}
+                        />
 
-                {/* <FieldItem id={1} title="asdasd"/>
-                <FieldItem id={1} title="asdasd"/> */}
+                        : <input
+                            type="text"
+                            value={activeItems.length
+                                ? activeItems[0].label
+                                : ""}
+                            readOnly/>
+}
+
+                    <div
+                        className={classNames("open-btn", {"active": open})}
+                        onClick={onToggleOpen}></div>
+                </div>
+
+                {multi && <div className="field-list">
+                    {activeItems.map((item) => <FieldItem
+                        key={item.id}
+                        id={item.id}
+                        title={item.label}
+                        onDel={onDelFieldItem}/>)}
+                </div>}
 
             </div>
-            <div className="list-options">
-                <Option id={1} title="asdasd"/>
-                <Option id={1} title="asdasd"/>
-                <Option id={1} title="asdasd"/>
-                <Option id={1} title="asdasd"/>
 
-            </div>
+            {open
+                ? isLoadingData
+                    ? <Loading/>
+                    : <div className="list-options">
+                            {optionsItems.map((item) => {
+                                return <Option id={item.id} key={item.id} title={item.label} onClick={onSelectOption}/>
+                            })}
+                        </div>
+                : null
+}
+
         </div>
     );
 }

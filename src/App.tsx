@@ -1,18 +1,56 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import {fetchCategories, setActiveIdCategory} from './redux/actions/categories';
 import './App.css';
 import MultiSelect from './components/MultiSelect';
+import { AppStateType } from './redux/reducers/rootReducer';
+import { TCategory, TChildren } from './mainTypes';
+import { addChildrenInBD, fetchChildrensByIdCategory } from './redux/actions/childrens';
+import FormCrud from './components/FormCrud/FormCrud';
+import { useCallback } from 'react';
+const arr = [ { label: 'apple', id: 0 }, { label: 'banana', id: 1 }, { label: 'pear', id: 2 } ];
+
 function App() {
+  const dispatch = useDispatch();
+  const { categories, childrens, isLoadingChild, idActiveCategory} = useSelector(({ categories, childrens }:AppStateType) => {
+    return {
+      categories: categories.items,
+      idActiveCategory: categories.activeId,
+      childrens: childrens.items,
+      isLoadingChild: childrens.isLoading,
+    }
+  })
+  useEffect(() => {
+   dispatch(fetchCategories())
+  }, []);
+  
+  const categoryOptions = React.useMemo(()=>categories.map((item:TCategory) => ({ id: item.id, label: item.name })), [categories]);
+  const childrenOptions = React.useMemo(()=>childrens.map((item:TChildren) => ({ id: item.id, label: item.name })), [childrens]);
+
+
+  const onSelectCategory = useCallback((id: number) => {
+    idActiveCategory !== id && dispatch(fetchChildrensByIdCategory(id));
+  }, [dispatch, idActiveCategory]);
+
+  const onAddCategory =  useCallback((name: string) => {
+    
+  }, [dispatch])
+  const onAddChildren = useCallback((name: string) => {
+    idActiveCategory!==null && dispatch(addChildrenInBD(idActiveCategory, name, "ss"));
+  }, [dispatch, idActiveCategory])
   return (
     <div className="app">
       <div className="container">
         <div className="main">
           <div className="sidebar">
-            <MultiSelect multi/>
-            
-            <MultiSelect/>
+            <h3 className="title">Категории</h3>
+            <MultiSelect options={categoryOptions} onSelectOptionsItem={onSelectCategory}/>
+            <h3 className="title">Дочерние объекты категории</h3>
+            <MultiSelect options={childrenOptions} multi isLoadingData={ isLoadingChild }/>
           </div>
     
           <div className="content">
+            <FormCrud onAddCategory={onAddCategory} onAddChildren={ onAddChildren}/>
             <div className="action-list">
               dqwdwqdq
             </div>
