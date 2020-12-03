@@ -1,13 +1,23 @@
 import React, { useState } from 'react';
+import { TCategory } from '../../mainTypes';
 type PropTypes = {
+  activeCategoryItem?: TCategory
   onAddCategory: (name:string, flag: string | null)=>void,
   onAddChildren: (name: string, flag: string | null) => void,
   onChangeCategory: (name: string, flag: string | null) => void,
   onChangeInputValue?:(name: string, value: string)=>void
 }
 // const initialState = {categoryName: ""}
-const FormChangeData: React.FC<PropTypes> = ({ onAddCategory, onAddChildren, onChangeCategory, onChangeInputValue }) => {
-  const [stateInputs, setStateInputs] = useState<{[key:string]:string}>({});
+const FormChangeData: React.FC<PropTypes> = ({ onAddCategory, onAddChildren, onChangeCategory, onChangeInputValue, activeCategoryItem }) => {
+  
+  const [stateInputs, setStateInputs] = useState<{ [key: string]: any }>({});
+  
+  React.useEffect(() => {
+    if (activeCategoryItem) {
+      let newState: { [key: string]: string } = { ...stateInputs, ["categoryChangeName"]: activeCategoryItem.name, "categoryChangeFlag": activeCategoryItem.flags || "" };
+      setStateInputs(newState)
+    }
+  }, [activeCategoryItem]);
   const onChangeInput = (e: any) => {
     let newState:{[key:string]:string} = { ...stateInputs, [e.target.name]: e.target.value };
     setStateInputs(newState);

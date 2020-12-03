@@ -31,6 +31,9 @@ function App() {
   const categoryOptions = React.useMemo(()=>categories.map((item:TCategory) => ({ id: item.id, label: item.name })), [categories]);
   const childrenOptions = React.useMemo(() => childrens.map((item: TChildren) => ({ id: item.id, label: item.name })), [childrens, idActiveCategory]);
 
+  const activeCategoryItem = React.useMemo(() => categories.filter((item: TCategory) => item.id === idActiveCategory)[0], [categories, idActiveCategory]);
+  console.log(activeCategoryItem);
+  
   const onClearEvents = useCallback(() => {
     dispatch(clearEvents());
   }, [dispatch, clearEvents])
@@ -120,6 +123,7 @@ const onChangePage = useCallback((num:number) => {
     
           <div className="content">
             <FormChangeData 
+              activeCategoryItem={activeCategoryItem}
               onAddCategory={onAddCategory} 
               onAddChildren={onAddChildren} 
               onChangeInputValue={onChangeInputValue} 
