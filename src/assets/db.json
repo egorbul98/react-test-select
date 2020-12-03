@@ -31,9 +31,9 @@
       "flags": null
     },
     {
-      "name": "qwdwqd",
-      "flags": "qwddwq",
-      "id": 6
+      "id": 6,
+      "name": "Книги",
+      "flags": null
     }
   ],
   "childrens": [
@@ -218,148 +218,10 @@
       "id": 58
     },
     {
-      "parent_id": 11,
-      "name": "ewfwef",
-      "flags": "wefwef",
+      "parent_id": 6,
+      "name": "qwdwqd",
+      "flags": null,
       "id": 59
-    },
-    {
-      "parent_id": 11,
-      "name": "ewfwef",
-      "flags": "wefwef",
-      "id": 60
-    },
-    {
-      "parent_id": 11,
-      "name": "ewfwef",
-      "flags": "wefwef",
-      "id": 61
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 62
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 63
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 64
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 65
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 66
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 67
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 68
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 69
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 70
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 71
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 72
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 73
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 74
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 75
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 76
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 77
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 78
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 79
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 80
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 81
-    },
-    {
-      "parent_id": 8,
-      "name": "qwdqwd",
-      "flags": "qwd",
-      "id": 82
     }
   ]
 }

@@ -1,5 +1,6 @@
 import Axios from "axios";
 import { TCategory } from "../../mainTypes";
+import { removeChildrensByParentIdInBD } from "./childrens";
 
 const urlDataServ = "http://localhost:3004";
 
@@ -7,7 +8,20 @@ export const SET_CATEGORIES = "SET_CATEGORIES";
 export const SET_ACTIVE_ID_CATEGORY = "SET_ACTIVE_ID_CATEGORY";
 export const SET_LOADING = "SET_LOADING";
 export const ADD_CATEGORY = "ADD_CATEGORY";
+export const CHANGE_CATEGORY = "CHANGE_CATEGORY";
 export const REMOVE_CATEGORY = "REMOVE_CATEGORY";
+
+export type TChangeCategory = {
+  type: typeof CHANGE_CATEGORY,
+  payload: TCategory
+}
+
+export const changeCategory = (item:TCategory): TChangeCategory => {
+  return {
+    type: CHANGE_CATEGORY, 
+    payload: item
+  }
+}
 
 export type TRemoveCategory = {
   type: typeof REMOVE_CATEGORY,
@@ -69,12 +83,25 @@ export const setCategories = (categories: TCategory[]): TSetCategories => {
   }
 }
 
+export const changeCategoryInBD = (item:TCategory) => (dispatch: any): void => {
+  dispatch(setLoading(true));
+  Axios.patch(`${urlDataServ}/categories/${item.id}`, item)
+    .then(({ data }) => {
+      dispatch(changeCategory(data));
+      // dispatch(removeChildrensByParentIdInBD(id))
+      dispatch(setLoading(false));
+    })
+    .catch((e) => {
+      console.error(e);
+    })
+}
 
 export const removeCategoryInBD = (id: number) => (dispatch: any): void => {
   dispatch(setLoading(true));
   Axios.delete(`${urlDataServ}/categories/${id}`)
     .then(({ data }) => {
       dispatch(removeCategory(id));
+      // dispatch(removeChildrensByParentIdInBD(id))
       dispatch(setLoading(false));
     })
     .catch((e) => {

@@ -8,6 +8,19 @@ export const SET_CHILDRENS = "SET_CHILDRENS";
 export const SET_LOADING_CHILD = "SET_LOADING_CHILD";
 export const ADD_CHILDREN = "ADD_CHILDREN";
 export const REMOVE_CHILDREN = "REMOVE_CHILDREN";
+export const REMOVE_CHILDRENS_BY_PARENT_ID = "REMOVE_CHILDRENS_BY_PARENT_ID";
+
+export type TRemoveChildrensByParentId = {
+  type: typeof REMOVE_CHILDRENS_BY_PARENT_ID,
+  payload: number
+}
+
+export const removeChildrensByParentId = (id: number): TRemoveChildrensByParentId => {
+  return {
+    type: REMOVE_CHILDRENS_BY_PARENT_ID, 
+    payload: id
+  }
+}
 
 export type TRemoveChildren = {
   type: typeof REMOVE_CHILDREN,
@@ -68,15 +81,19 @@ export const removeChildrenInBD = (id: number) => (dispatch: any): void => {
       console.error(e);
     })
 }
-// export const removeChildrensByParentIdInBD = (id: number) => (dispatch: any): void => {
-//   Axios.delete(`${urlDataServ}/childrens/${id}`)
-//     .then(({ data }) => {
-//       dispatch(removeChildrens(id));
-//     })
-//     .catch((e) => {
-//       console.error(e);
-//     })
-// }
+export const removeChildrensByParentIdInBD = (parentId: number) => (dispatch: any): void => {
+  console.log("wfqwf", parentId);
+  
+  Axios.delete(`${urlDataServ}/childrens/83/84`)
+    .then(({ data }) => {
+      console.log("data", data);
+      
+      dispatch(removeChildrensByParentId(parentId));
+    })
+    .catch((e) => {
+      console.error(e);
+    })
+}
 
 export const addChildrenInBD = (parent_id: number, name: string, flags: string | null) => (dispatch: any): void => {
   dispatch(setLoading(true));

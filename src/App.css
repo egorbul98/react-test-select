@@ -22,3 +22,13 @@
 .main{
   display: flex;
 }
+
+@media(max-width: 768px){
+  .main{
+    display: block;
+  }
+
+  .content{
+    padding-left: 0;
+  }
+}

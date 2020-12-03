@@ -1,0 +1,16 @@
+
+.actions__list{
+  max-height: 500px;
+  overflow: auto;
+}
+.actions__item{
+  display: flex;
+  padding: 4px 0;
+  border-bottom: 1px solid #ccc;
+}
+.actions__item .id{
+  width: 20%;
+}
+.actions__item .event-name, .actions__item .event-value{
+  width: 40%;
+}

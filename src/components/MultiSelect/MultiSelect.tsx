@@ -16,14 +16,14 @@ type PropTypes = {
     isLoadingData?: boolean,
     multi?: boolean,//мультиселект или просто селект
     onSelectOptionsItem?: (id : number) => void,
-    onClick?: () => void,
-    onClickOptions?: () => void,
+    onClick?: (open:boolean) => void,
     onDelOptions?: (id:number) => void,
-    onDelFieldItems?: () => void
+    onDelFieldItems?: (id: number) => void,
+    onChangePage?:(numPage: number) => void,
 }
 
 const perPage = 2;
-const MultiSelect : React.FC < PropTypes > = ({multi, options, isLoadingData, onSelectOptionsItem, onDelOptions}) => {
+const MultiSelect: React.FC<PropTypes> = ({ multi, options, isLoadingData, onSelectOptionsItem, onDelOptions, onClick, onDelFieldItems, onChangePage }) => {
     const [valueFieldInput, setValueFieldInput] = useState('');
     const [open, setOpen] = useState(false);
     const [activeItems, setActiveItems] = useState < TOption[] > ([]);
@@ -40,9 +40,20 @@ const MultiSelect : React.FC < PropTypes > = ({multi, options, isLoadingData, on
     const firstIndexItemPage = lastIndexItemPage - perPage;
     const optionsItems = optionsFilterItems.slice(firstIndexItemPage, lastIndexItemPage);
    
-    
-    const onChangePage = useCallback((numPage: number) => {
+    useEffect(() => {//в случае, если поменялось название опции, то следует поменять его и в activeItems
+        if (!multi && activeItems.length) {
+            options.some((item) => {
+                if (item.id === activeItems[0].id) {
+                    setActiveItems([item]);
+                }
+                return false;
+            })
+        }
+    }, [options]);
+
+    const onChangePageHandler = useCallback((numPage: number) => {
         setCurrentPage(numPage);
+        onChangePage && onChangePage(numPage);
     }, [setValueFieldInput])
 
     const onChangeFieldHandler = useCallback((e : any) => {
@@ -56,18 +67,20 @@ const MultiSelect : React.FC < PropTypes > = ({multi, options, isLoadingData, on
 
     const onDelFieldItem = useCallback((id : number) => {
         setActiveItems(activeItems.filter((item) => item.id !== id));
+        onDelFieldItems && onDelFieldItems(id);
     }, [setActiveItems, activeItems]);
 
     
     const onDelOptionHandle = useCallback((id: number) => {
         onDelOptions && onDelOptions(id);
         setCurrentPage(1);
-        !multi && activeItems[0].id === id && setActiveItems([]);//Если обычный селект, и мы удаляем активную опцию, то очищаем эту опцию из инпута
+        !multi && activeItems.length>0 && activeItems[0].id === id && setActiveItems([]);//Если обычный селект и мы удаляем активную опцию, то очищаем эту опцию из инпута
     }, [setActiveItems, activeItems]);
 
     const onSelectOption = useCallback((id: number) => {
         if (multi) {
-            setActiveItems([ ...activeItems, options.filter((item) => item.id === id)[0] ])
+            setActiveItems([...activeItems, options.filter((item) => item.id === id)[0]])
+            setCurrentPage(1);
         } else {
           setActiveItems([options.filter((item) => item.id === id)[0]]);
         }
@@ -75,19 +88,25 @@ const MultiSelect : React.FC < PropTypes > = ({multi, options, isLoadingData, on
     }, [onSelectOptionsItem, setActiveItems, activeItems, options, multi])
 
     const onToggleOpen = useCallback((e : any) => {
-        if (!multi && (e.target.classList.contains("field-wrap") || e.target.closest(".field-wrap")) || (e.target.classList.contains("open-btn"))) {
             setOpen(!open)
-        }
+            onClick && onClick(!open);
     }, [multi, setOpen, open]);
+
+    const onOpenSelect = (e:any) => {
+        if (!e.target.classList.contains("open-btn")) {
+            setOpen(true);
+            onClick && onClick(true);
+        }
+    }
 
     return (
         <div className={classNames("select-total", {"multi-select": multi})}>
             <div className="top">
-                <div className="field-wrap" onClick={onToggleOpen}>
+                <div className="field-wrap" onClick={onOpenSelect}>
                     {multi
                         ? <Autocomplete
                                 getItemValue={(item) => item.label}
-                                items={optionsItems}
+                                items={optionsFilterItems}
                                 renderItem={(item, isHighlighted) => (
                                 <div
                                     key={item.id}
@@ -97,6 +116,7 @@ const MultiSelect : React.FC < PropTypes > = ({multi, options, isLoadingData, on
                                     {item.label + " " + item.id}
                                 </div>
                             )}
+                                shouldItemRender={(item, value) => item.label.toLowerCase().indexOf(value.toLowerCase()) > -1}
                                 autoHighlight={true}
                                 value={valueFieldInput}
                                 onChange={onChangeFieldHandler}
@@ -111,7 +131,7 @@ const MultiSelect : React.FC < PropTypes > = ({multi, options, isLoadingData, on
                         onClick={onToggleOpen}></div>
                 </div>
 
-                {multi && <div className="field-list">
+                {multi && activeItems.length>0 && <div className="field-list">
                     {activeItems.map((item) => <FieldItem
                         key={item.id}
                         id={item.id}
@@ -128,7 +148,7 @@ const MultiSelect : React.FC < PropTypes > = ({multi, options, isLoadingData, on
                             {optionsItems.map((item) => {
                                 return <Option id={item.id} key={item.id} title={item.label} onClick={onSelectOption} onDel={onDelOptionHandle}/>
                             })}
-                        <Pagination countItems={ optionsFilterItems.length} perPage={perPage}  currentPage={currentPage} onClickItem={onChangePage} />
+                        <Pagination countItems={ optionsFilterItems.length} perPage={perPage}  currentPage={currentPage} onClickItem={onChangePageHandler} />
                             
                         </div>
                 : null
@@ -141,4 +161,4 @@ const MultiSelect : React.FC < PropTypes > = ({multi, options, isLoadingData, on
     );
 }
 
-export default MultiSelect;
+export default React.memo(MultiSelect);

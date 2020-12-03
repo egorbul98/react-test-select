@@ -9,3 +9,8 @@ export type TChildren = {
   name: string,
   flags: string | null
 }
+export type TEvent = {
+  id: number,
+  eventName: string,
+  eventValue: string,
+}

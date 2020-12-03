@@ -8,6 +8,8 @@ type PropsType = {
 }
 const Options: React.FC<PropsType> = ({ id, title, onDel, onClick }) => {
   const onDelHandler = () => {
+    console.log(id, "IDDD");
+    
     onDel && onDel(id);
   }
   const onClickHandler = () => {
