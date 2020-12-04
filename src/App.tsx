@@ -32,7 +32,6 @@ function App() {
   const childrenOptions = React.useMemo(() => childrens.map((item: TChildren) => ({ id: item.id, label: item.name })), [childrens, idActiveCategory]);
 
   const activeCategoryItem = React.useMemo(() => categories.filter((item: TCategory) => item.id === idActiveCategory)[0], [categories, idActiveCategory]);
-  console.log(activeCategoryItem);
   
   const onClearEvents = useCallback(() => {
     dispatch(clearEvents());
@@ -54,7 +53,7 @@ function App() {
   }, [dispatch, addEvent])
 
   const onChangeCategory = useCallback((name, flags) => {
-    if (idActiveCategory) {
+    if (idActiveCategory !== null) {
       dispatch(changeCategoryInBD({id:idActiveCategory, name, flags}));
       dispatch(addEvent("change category", "name " + name + "; flags = " + flags));
     } else {
@@ -68,7 +67,14 @@ function App() {
 const onSelectCategory = useCallback((id: number) => {
   if (idActiveCategory !== id) {
     dispatch(fetchChildrensByIdCategory(id));
-    dispatch(addEvent("select category", "id category = " + id));
+    categories.some((item) => { //Если у категории не заполнено поле flags, то записываем событие
+      if (item.id === id) {
+        !item.flags && dispatch(addEvent("select category", "id category = " + id));
+        return true;
+      }
+      return false;
+    })
+    
   }
 }, [dispatch, idActiveCategory, fetchChildrensByIdCategory, addEvent]);
   
